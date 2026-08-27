@@ -1,16 +1,5 @@
 // mailer.js
-// Sends the invite email using your Gmail account via an "App Password".
-// See README.md Step 1 for how to generate GMAIL_APP_PASSWORD.
-
-const nodemailer = require('nodemailer');
-
-const transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
-});
+const BREVO_API_URL = 'https://api.brevo.com/v3/smtp/email';
 
 function inviteEmailHtml(acceptUrl) {
   return `
@@ -34,12 +23,25 @@ function inviteEmailHtml(acceptUrl) {
 }
 
 async function sendInviteEmail(toEmail, acceptUrl) {
-  await transporter.sendMail({
-    from: `"ads-man" <${process.env.GMAIL_USER}>`,
-    to: toEmail,
-    subject: 'You are invited to ads-man — Get Started',
-    html: inviteEmailHtml(acceptUrl),
+  const response = await fetch(BREVO_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'api-key': process.env.BREVO_API_KEY,
+    },
+    body: JSON.stringify({
+      sender: { name: 'ads-man', email: process.env.GMAIL_USER },
+      to: [{ email: toEmail }],
+      subject: 'You are invited to ads-man — Get Started',
+      htmlContent: inviteEmailHtml(acceptUrl),
+    }),
   });
+
+  if (!response.ok) {
+    const errorBody = await response.text();
+    throw new Error(`Brevo API error (${response.status}): ${errorBody}`);
+  }
 }
 
 module.exports = { sendInviteEmail };
