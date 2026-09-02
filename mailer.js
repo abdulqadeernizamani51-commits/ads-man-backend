@@ -92,7 +92,7 @@ function inviteEmailHtml(acceptUrl) {
           <!-- Footer note -->
           <tr>
             <td style="padding:20px 36px 36px 36px; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:1.6; color:#666666;">
-               The invitation works only once, so do not leave without completing it. This invite link will expire soon.
+               This invitation can only be used once, so please complete it before leaving. This invite link will expire soon.
             </td>
           </tr>
 
