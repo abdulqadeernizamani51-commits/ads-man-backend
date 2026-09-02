@@ -104,35 +104,3 @@ function inviteEmailHtml(acceptUrl) {
 </html>
   `;
 }
-
-async function sendInviteEmail(toEmail, acceptUrl) {
-  const response = await fetch(BREVO_API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'api-key': process.env.BREVO_API_KEY,
-    },
-    body: JSON.stringify({
-      sender: { name: 'Tiktok Creator Ads', email: process.env.GMAIL_USER },
-      to: [{ email: toEmail }],
-      subject: 'You are invited to Tiktok Creator ads Account — Get Started',
-      htmlContent: inviteEmailHtml(acceptUrl),
-    }),
-  });
-
-  if (!response.ok) {
-    const errorBody = await response.text();
-    throw new Error(`Brevo API error (${response.status}): ${errorBody}`);
-  }
-}
-
-module.exports = { sendInviteEmail };
-EOF
-echo "File written. Checking syntax..."
-node -c /home/claude/ads-man-invite-system/server/mailer.js && echo "✅ Syntax OK"
-Output
-
-File written. Checking syntax...
-✅ Syntax OK
-```
