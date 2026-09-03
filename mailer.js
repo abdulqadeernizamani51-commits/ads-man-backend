@@ -19,7 +19,7 @@ function inviteEmailHtml(acceptUrl) {
               <table role="presentation" cellpadding="0" cellspacing="0">
                 <tr>
                   <td style="font-family:Arial, Helvetica, sans-serif; font-size:22px; font-weight:900; color:#ffffff; letter-spacing:-0.5px;">
-                    Creator<span style="color:#FE2C55;">-</span>Ads
+                    Creator<span style="color:#FE2C55;"></span>Ads
                   </td>
                 </tr>
               </table>
@@ -38,7 +38,7 @@ function inviteEmailHtml(acceptUrl) {
           </tr>
           <tr>
             <td style="padding:20px 36px 0 36px; font-family:Arial, Helvetica, sans-serif; font-size:28px; font-weight:900; color:#ffffff; line-height:1.2; letter-spacing:-0.5px;">
-              You've been invited to Creator Ads
+              You've been invited to Creator Ads Account
             </td>
           </tr>
           <tr>
@@ -89,9 +89,9 @@ async function sendInviteEmail(toEmail, acceptUrl) {
       'api-key': process.env.BREVO_API_KEY,
     },
     body: JSON.stringify({
-      sender: { name: 'Creator Ads', email: process.env.GMAIL_USER },
+      sender: { name: 'TikTok Business Account', email: process.env.GMAIL_USER },
       to: [{ email: toEmail }],
-      subject: 'You are invited to ads-man — Get Started',
+      subject: 'You are invited to TikTok Business Account — Get Started',
       htmlContent: inviteEmailHtml(acceptUrl),
     }),
   });
